@@ -1,16 +1,16 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Inter, Poppins } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const poppins = Poppins({
+  weight: "400",
   subsets: ["latin"],
-});
+})
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const inter = Inter({
+  weight: "400",
   subsets: ["latin"],
-});
+})
 
 export const metadata = {
   title: "Create Next App",
@@ -21,12 +21,12 @@ export default function RootLayout({ children }) {
   return (
     <html
       lang="en"
-      theme
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      data-theme = "light"
+      className={`${poppins.className} ${inter.className} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col max-w-7xl mx-auto">
         <Navbar></Navbar>
-        <main>
+        <main className="">
           {children}
         </main>
       </body>
