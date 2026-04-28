@@ -1,23 +1,41 @@
 'use client'
 import FoodCard from '@/components/FoodCard';
+import LoadingSpinner from '@/components/LoadingSpinner';
 import NoFoodsCard from '@/components/NoFoodsCard';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 
 const HomePage = () => {
   const [foods, setFoods] = useState([]);
+  const [filteredFoods, setFilteredFoods] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [searchInput, setSearchInput] = useState("");
-  
-console.log(searchInput)
+
+  // console.log(searchInput)
+
   useEffect(() => {
     const loadFoods = async () => {
+      setLoading(true);
       const res = await fetch("https://phi-lab-server.vercel.app/api/v1/lab/foods");
       const data = await res.json();
       setFoods(data.data)
+      setLoading(false);
     };
-    
     loadFoods();
+
   }, [])
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    const expectedFoods = foods.filter(food => food.dish_name.toLocaleLowerCase().includes(searchInput.toLocaleLowerCase()));
+    setFoods(expectedFoods);
+  }
+
+  const handleFilteredFoods = (e) =>{
+    const value = e.target.value;
+    console.log((value));
+  }
+
 
 
   return (
@@ -40,17 +58,21 @@ console.log(searchInput)
             type="text"
             name="text"
             value={searchInput}
-            onChange={e => {setSearchInput(e.target.value)}}
-            id=""
+            onChange={e => { setSearchInput(e.target.value) }}
             placeholder='Search food...'
             className='px-4 py-2 bg-base-300 w-[80%] flex-1 rounded-lg' />
+
           <input
+            onClick={handleSearch}
             type="submit"
             value="Search"
             className='p-2 bg-amber-600 px-6 rounded-lg' />
         </form>
 
-        <select name="dropdown" id="" className='px-4 py-2 bg-base-300 rounded-lg'>
+        <select 
+        name="dropdown"
+        onChange={handleFilteredFoods} 
+        className='px-4 py-2 bg-base-300 rounded-lg'>
           <option value="All Category">All Category</option>
           <option value="Burger">Burger</option>
           <option value="Pizza">Pizza</option>
@@ -61,6 +83,10 @@ console.log(searchInput)
         </select>
       </div>
 
+
+      {
+        loading && <LoadingSpinner></LoadingSpinner>
+      }
 
 
       {/* food cards */}
