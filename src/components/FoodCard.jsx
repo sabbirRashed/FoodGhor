@@ -4,7 +4,8 @@ import { FaStar } from 'react-icons/fa';
 import { SlArrowRight } from 'react-icons/sl';
 
 const FoodCard = ({ food }) => {
-    console.log(food);
+    console.log(food.category);
+
     const { image_link, dish_name, price, rating } = food;
     return (
         <div className='border border-gray-700 p-6 rounded-lg bg-base-300 tooltip min-w-0' data-tip={dish_name}>

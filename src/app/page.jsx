@@ -9,31 +9,34 @@ const HomePage = () => {
   const [foods, setFoods] = useState([]);
   const [filteredFoods, setFilteredFoods] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [searching, setSearching] = useState("");
+  const [category, setCategory] = useState("");
   const [searchInput, setSearchInput] = useState("");
 
   // console.log(searchInput)
 
   useEffect(() => {
-    const loadFoods = async () => {
+    const loadFoods = async (category = "", search = "") => {
       setLoading(true);
-      const res = await fetch("https://phi-lab-server.vercel.app/api/v1/lab/foods");
+      const res = await fetch(`https://phi-lab-server.vercel.app/api/v1/lab/foods?category=${category}&search=${search}`);
       const data = await res.json();
       setFoods(data.data)
       setLoading(false);
     };
-    loadFoods();
+    loadFoods(category, searching);
 
-  }, [])
+  }, [category, searching])
 
   const handleSearch = (e) => {
-    e.preventDefault();
-    const expectedFoods = foods.filter(food => food.dish_name.toLocaleLowerCase().includes(searchInput.toLocaleLowerCase()));
-    setFoods(expectedFoods);
+    e.preventDefault()
+
+    setSearching(searchInput);
   }
 
-  const handleFilteredFoods = (e) =>{
+  const handleFilteredFoods = (e) => {
     const value = e.target.value;
-    console.log((value));
+    setCategory(value)
+
   }
 
 
@@ -69,36 +72,41 @@ const HomePage = () => {
             className='p-2 bg-amber-600 px-6 rounded-lg' />
         </form>
 
-        <select 
-        name="dropdown"
-        onChange={handleFilteredFoods} 
-        className='px-4 py-2 bg-base-300 rounded-lg'>
-          <option value="All Category">All Category</option>
-          <option value="Burger">Burger</option>
-          <option value="Pizza">Pizza</option>
-          <option value="Dessert">Dessert</option>
-          <option value="Beverage">Beverage</option>
-          <option value="Rice">Rice</option>
-          <option value="Dish">Dish</option>
+        <select
+          name="dropdown"
+          value={category}
+          onChange={handleFilteredFoods}
+          className='px-4 py-2 bg-base-300 rounded-lg'>
+          <option value="all Category">All Category</option>
+          <option value="pizza">Pizza</option>
+          <option value="dessert">Dessert</option>
+          <option value="burger">Burger</option>
+          <option value="beverage">Beverage</option>
+          <option value="rice">Rice</option>
+          <option value="dish">Dish</option>
         </select>
       </div>
 
 
-      {
-        loading && <LoadingSpinner></LoadingSpinner>
-      }
-
-
       {/* food cards */}
-      <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5'>
-        {
-          foods.map(food => {
-            return <FoodCard
-              key={food.id}
-              food={food}></FoodCard>
-          })
-        }
-      </div>
+      {
+        loading ? (
+          <LoadingSpinner></LoadingSpinner>
+        ) :
+          foods.length === 0 ? (
+            <NoFoodsCard></NoFoodsCard>
+          ) : (
+            <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5'>
+              {
+                foods.map(food => {
+                  return <FoodCard
+                    key={food.id}
+                    food={food}></FoodCard>
+                })
+              }
+            </div>
+          )
+      }
     </div>
   );
 };
