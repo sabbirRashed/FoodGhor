@@ -4,7 +4,7 @@ import { FaStar } from 'react-icons/fa';
 import { SlArrowRight } from 'react-icons/sl';
 
 const FoodCard = ({ food }) => {
-    console.log(food.category);
+    // console.log(food.category);
 
     const { image_link, dish_name, price, rating } = food;
     return (
