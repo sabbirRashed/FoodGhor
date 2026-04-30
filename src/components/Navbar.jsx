@@ -7,10 +7,7 @@ const Navbar = () => {
             <Link href="/">Home</Link>
         </li>
         <li>
-            <Link href="/foods-cc">Foods CC</Link>
-        </li>
-        <li>
-            <Link href="/foods-sc">Foods SC</Link>
+            <Link href="/foods-cc">Favourite Foods</Link>
         </li>
         <li>
             <Link href="/about">About</Link>
@@ -29,7 +26,7 @@ const Navbar = () => {
                     </div>
                     <ul
                         tabIndex="-1"
-                        className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
+                        className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 border border-gray-700 rounded-lg">
                         {links}
                     </ul>
                 </div>

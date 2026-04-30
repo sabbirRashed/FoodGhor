@@ -7,7 +7,6 @@ import React, { useEffect, useState } from 'react';
 
 const HomePage = () => {
   const [foods, setFoods] = useState([]);
-  const [filteredFoods, setFilteredFoods] = useState([]);
   const [loading, setLoading] = useState(false);
   const [searching, setSearching] = useState("");
   const [category, setCategory] = useState("");

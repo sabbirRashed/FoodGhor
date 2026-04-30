@@ -1,6 +1,7 @@
 "use client"
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import React, { useState } from 'react';
+import { IoSearchOutline } from 'react-icons/io5';
 
 const SearchInput = () => {
     const [searchInput, setSearchInput] = useState("");
@@ -12,13 +13,13 @@ const SearchInput = () => {
 
     const handleSearch = (e) => {
         e.preventDefault();
-        
+
         const params = new URLSearchParams(searchParams);
 
-        if(searchInput){
+        if (searchInput) {
             params.set("search", searchInput);
         }
-        else{
+        else {
             params.delete("search");
         }
 
@@ -27,7 +28,7 @@ const SearchInput = () => {
     }
 
     return (
-        <form className='flex w-full gap-2'>
+        <form className='flex w-full gap-1 md:gap-2'>
             <input
                 type="text"
                 name="text"
@@ -36,10 +37,18 @@ const SearchInput = () => {
                 placeholder='Search food...'
                 className='px-4 py-2 bg-base-300 w-[80%] flex-1 rounded-lg' />
 
-            <input
+            <button
                 onClick={handleSearch}
                 type="submit"
-                className='p-2 bg-amber-600 px-6 rounded-lg' />
+                className='p-2 hidden md:inline-block bg-amber-600 px-6 rounded-lg'>
+                    Search
+            </button>
+            <button
+                onClick={handleSearch}
+                type="submit"
+                className='px-3 md:hidden bg-amber-600 text-white rounded-lg'>
+                    <IoSearchOutline />
+            </button>
         </form>
     );
 };

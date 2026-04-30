@@ -1,9 +1,10 @@
 import FilterInput from '@/components/FilterInput';
 import FoodCard from '@/components/FoodCard';
+import LoadingSpinner from '@/components/LoadingSpinner';
 import NoFoodsCard from '@/components/NoFoodsCard';
 import SearchInput from '@/components/SearchInput';
 import Image from 'next/image';
-import React from 'react';
+import React, { Suspense } from 'react';
 
 const HomePage = async ({ searchParams }) => {
     const sp = await searchParams;
@@ -18,7 +19,7 @@ const HomePage = async ({ searchParams }) => {
 
 
     return (
-        <div className='mt-20  mx-20'>
+        <div className='mt-20  mx-6 md:mx-20'>
             {/*home page heading */}
             <h2 className='flex justify-center items-end gap-2 font-poppins'>
                 <span className='text-2xl md:text-4xl font-bold'>Discover Delicious Foods</span>
@@ -30,7 +31,7 @@ const HomePage = async ({ searchParams }) => {
 
 
             {/* search and filter section */}
-            <div className='flex items-center gap-2 my-10 p-4 rounded-lg bg-base-200 border border-base-300'>
+            <div className='flex  flex-col md:flex-row gap-2 my-10 p-4 rounded-lg bg-base-200 border border-base-300'>
                 <SearchInput></SearchInput>
                 <FilterInput></FilterInput>
             </div>

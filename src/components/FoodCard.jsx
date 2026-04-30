@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import React from 'react';
 import { FaStar } from 'react-icons/fa';
 import { SlArrowRight } from 'react-icons/sl';
@@ -6,7 +7,7 @@ import { SlArrowRight } from 'react-icons/sl';
 const FoodCard = ({ food }) => {
     // console.log(food.category);
 
-    const { image_link, dish_name, price, rating } = food;
+    const {id, image_link, dish_name, price, rating } = food;
     return (
         <div className='border border-gray-700 p-6 rounded-lg bg-base-300 tooltip min-w-0' data-tip={dish_name}>
             <div className='flex justify-center'>
@@ -27,7 +28,9 @@ const FoodCard = ({ food }) => {
                 </div>
 
                 <div className='flex justify-between items-center'>
-                    <button className='btn btn-sm bg-white rounded-full text-neutral'>Details <SlArrowRight /></button>
+                    <Link href={`/${id}`}>
+                        <button className='btn btn-sm bg-white rounded-full text-neutral'>Details <SlArrowRight /></button>
+                    </Link>
                     <span className='flex justify-end items-center gap-1'><FaStar />{rating}</span>
                 </div>
             </div>
